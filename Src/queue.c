@@ -126,6 +126,7 @@ Queue_StatusTypeDef Queue_dequeue( Queue_t *queue, uint8_t *item )
 {
    if( queue->size == 0 )
    {
+      *item = 0;
       return QUEUE_ERR_EMPTY;
    }
    

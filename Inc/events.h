@@ -48,9 +48,10 @@
 // Include ********************************************************************
 
 // Exported defines ***********************************************************
-#define EVENT_BUTTON_IGNITION    ( 0u )
-#define EVENT_BUTTON_LEFT        ( 1u )
-#define EVENT_BUTTON_RIGHT       ( 2u )
+#define EVENT_IDLE               ( 0u )
+#define EVENT_BUTTON_IGNITION    ( 1u )
+#define EVENT_BUTTON_LEFT        ( 2u )
+#define EVENT_BUTTON_RIGHT       ( 3u )
 
 // Exported types *************************************************************
 
