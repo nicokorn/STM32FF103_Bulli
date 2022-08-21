@@ -67,67 +67,24 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include "main.h"
-#include "ws2812b.h"
-#include "queue.h"
-#include "events.h"
-#include "button.h"
+#include "bulli.h"
 
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
-typedef struct
-{
-   uint8_t  row;
-   uint16_t col;
-}Bulli_light_t;
-typedef struct
-{
-   bool  ignition_on;
-   bool  blink_left;
-   bool  blink_right;
-}Bulli_status_t;
 
 /* Private define ------------------------------------------------------------*/
-#define EVENT_QUEUE_CAPACITY     ( 10u )
-#define REFRESH_PERIOD_MS        ( 100u )
 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-static uint8_t event;
-static Bulli_status_t bulli;
-static const Bulli_light_t bulli_r_blink =
-{
-   .row = 1,
-   .col = 1
-};
-static const Bulli_light_t bulli_l_blink =
-{
-   .row = 1,
-   .col = 2
-};
-static const Bulli_light_t bulli_r_light =
-{
-   .row = 1,
-   .col = 0
-};
-static const Bulli_light_t bulli_l_light =
-{
-   .row = 1,
-   .col = 3
-};
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void main_cbButtonIgnition(void);
-static void main_cbButtonLeft(void);
-static void main_cbButtonRight(void);
 
 /* Global variables ----------------------------------------------------------*/
-Queue_t eventQueue;
 
 /* Private user code ---------------------------------------------------------*/
 
@@ -139,13 +96,6 @@ Queue_t eventQueue;
 /// \return    none
 int main( void )
 {
-   uint32_t framecounter=0;
-   
-   // set initial bulli states
-   bulli.ignition_on = false;
-   bulli.blink_left = false;
-   bulli.blink_right = false;
-  
    // Reset of all peripherals, Initializes the Flash interface and the Systick.
    HAL_Init();
    
@@ -155,175 +105,14 @@ int main( void )
    // Initialize all configured peripherals
    MX_GPIO_Init();
    
-   // init peripherals for using the ws2812b leds
-   if( WS2812B_init() != WS2812B_READY )
+   // init the vw bulli
+   if( Bulli_init() != Bulli_OK )
    {
       while(1);
    }
    
-   // init buttons
-   if( Button_init( main_cbButtonIgnition, main_cbButtonLeft, main_cbButtonRight ) != Button_OK )
-   {
-      while(1);
-   }
-   
-   // init queue
-   if( Queue_init( &eventQueue, EVENT_QUEUE_CAPACITY ) != QUEUE_OK )
-   {
-      while(1);
-   }
-   
-   while (1)
-   {
-      WS2812B_clearBuffer();
-      
-      // read event queue
-      Queue_dequeue( &eventQueue, &event );
-      
-      // process event
-      switch( event )
-      {
-         case EVENT_IDLE:
-         break;
-         case EVENT_BUTTON_IGNITION:
-            if( bulli.ignition_on != false )
-            {
-               bulli.ignition_on = false;
-               bulli.blink_left = false;
-               bulli.blink_right = false;
-            }
-            else
-            {
-               bulli.ignition_on = true;
-               bulli.blink_left = false;
-               bulli.blink_right = false;
-            }
-         break;
-         case EVENT_BUTTON_LEFT:
-            if( bulli.ignition_on != false )
-            {
-               if( bulli.blink_left != false )
-               {
-                  bulli.blink_left = false;
-               }
-               else
-               {
-                  bulli.blink_left = true;
-               }
-               
-               if( bulli.blink_right != false )
-               {
-                  bulli.blink_right = false;
-               }
-            }
-         break;
-         case EVENT_BUTTON_RIGHT:
-            if( bulli.ignition_on != false )
-            {
-               if( bulli.blink_right != false )
-               {
-                  bulli.blink_right = false;
-               }
-               else
-               {
-                  bulli.blink_right = true;
-               }
-               
-               if( bulli.blink_left != false )
-               {
-                  bulli.blink_left = false;
-               }
-            }
-         break;
-         default:;
-      }
-      
-      // draw into framebuffer
-      if( bulli.ignition_on != false )
-      {
-         WS2812B_setPixel( bulli_l_light.row, bulli_l_light.col, 0xff, 0xff, 0xff );
-         WS2812B_setPixel( bulli_r_light.row, bulli_r_light.col, 0xff, 0xff, 0xff );
-      }
-      else
-      {
-         WS2812B_setPixel( bulli_l_light.row, bulli_l_light.col, 0x00, 0x00, 0x00 );
-         WS2812B_setPixel( bulli_r_light.row, bulli_r_light.col, 0x00, 0x00, 0x00 );
-      }
-      
-      if( bulli.blink_left != false )
-      {
-         if( framecounter%20 < 10 )
-         {
-            WS2812B_setPixel( bulli_l_blink.row, bulli_l_blink.col, 0xff, 0x80, 0x00 );
-         }
-         else
-         {
-            WS2812B_setPixel( bulli_l_blink.row, bulli_l_blink.col, 0x00, 0x00, 0x00 );
-         }
-      }
-      else
-      {
-         WS2812B_setPixel( bulli_l_blink.row, bulli_l_blink.col, 0x00, 0x00, 0x00 );
-      }
-      
-      if( bulli.blink_right != false )
-      {
-         if(  framecounter%20 < 10 )
-         {
-            WS2812B_setPixel( bulli_r_blink.row, bulli_r_blink.col, 0xff, 0x80, 0x00 );
-         }
-         else
-         {
-            WS2812B_setPixel( bulli_r_blink.row, bulli_r_blink.col, 0x00, 0x00, 0x00 );
-         }
-      }
-      else
-      {
-         WS2812B_setPixel( bulli_r_blink.row, bulli_r_blink.col, 0x00, 0x00, 0x00 );
-      }
-      
-      WS2812B_sendBuffer();
-      HAL_Delay(REFRESH_PERIOD_MS);
-      framecounter++;
- 
-      //WS2812B_clearBuffer();
-      //WS2812B_setPixel( 0, --i%COL, r, g, b );
-      //WS2812B_sendBuffer();
-      //HAL_Delay(REFRESH_PERIOD_MS);
-   }
-}
-
-// ----------------------------------------------------------------------------
-/// \brief     Ignition button callback.
-///
-/// \param     none
-///
-/// \return    none
-void main_cbButtonIgnition( void )
-{
-   Queue_enqueue( &eventQueue, EVENT_BUTTON_IGNITION );
-}
-
-// ----------------------------------------------------------------------------
-/// \brief     Left button callback.
-///
-/// \param     none
-///
-/// \return    none
-void main_cbButtonLeft( void )
-{
-   Queue_enqueue( &eventQueue, EVENT_BUTTON_LEFT );
-}
-
-// ----------------------------------------------------------------------------
-/// \brief     Right button callback.
-///
-/// \param     none
-///
-/// \return    none
-void main_cbButtonRight( void )
-{
-   Queue_enqueue( &eventQueue, EVENT_BUTTON_RIGHT );
+   // should never left this function
+   Bulli_run();
 }
 
 // ----------------------------------------------------------------------------

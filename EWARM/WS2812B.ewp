@@ -1137,6 +1137,9 @@
             <group>
                 <name>Inc</name>
                 <file>
+                    <name>$PROJ_DIR$\..\Inc\bulli.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\Inc\events.h</name>
                 </file>
                 <file>
@@ -1154,6 +1157,9 @@
             </group>
             <group>
                 <name>Src</name>
+                <file>
+                    <name>$PROJ_DIR$\..\Src\bulli.c</name>
+                </file>
                 <file>
                     <name>$PROJ_DIR$\..\Src\main.c</name>
                 </file>

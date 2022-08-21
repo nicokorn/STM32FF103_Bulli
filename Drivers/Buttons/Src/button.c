@@ -171,7 +171,7 @@ static Button_StatusTypeDef init_gpio( void )
    BUTTON_GPIO_CLK
    GPIO_InitTypeDef GPIO_InitStruct;               
    GPIO_InitStruct.Pin  = BUTTON_0_PIN | BUTTON_1_PIN | BUTTON_2_PIN;
-   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
    GPIO_InitStruct.Pull = GPIO_PULLUP;                         
    HAL_GPIO_Init(BUTTON_GPIO, &GPIO_InitStruct);   
    
@@ -209,7 +209,7 @@ void TIM1_UP_IRQHandler( void )
    // read input pin level and increment debounce counter accordingly
    if( button0DebouncePhase != false )
    {
-      if( HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_0_PIN) )
+      if( !HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_0_PIN) )
       {
          button0DebounceCnt++;
       }
@@ -220,7 +220,7 @@ void TIM1_UP_IRQHandler( void )
    {
       button0DebouncePhase = false;
       
-      if( button0DebounceCnt == DEBOUNCE_VAL )
+      if( button0DebounceCnt == DEBOUNCE_VAL ) // || button0DebounceCnt == 0 )
       {
          // button callback
          cbButton0();
@@ -230,7 +230,7 @@ void TIM1_UP_IRQHandler( void )
    // read input pin level and increment debounce counter accordingly
    if( button1DebouncePhase != false )
    {
-      if( HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_1_PIN) )
+      if( !HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_1_PIN) )
       {
          button1DebounceCnt++;
       }
@@ -241,7 +241,7 @@ void TIM1_UP_IRQHandler( void )
    {
       button1DebouncePhase = false;
       
-      if( button1DebounceCnt == DEBOUNCE_VAL )
+      if( button1DebounceCnt == DEBOUNCE_VAL ) // || button1DebounceCnt == 0 )
       {
          // button callback
          cbButton1();
@@ -251,7 +251,7 @@ void TIM1_UP_IRQHandler( void )
    // read input pin level and increment debounce counter accordingly
    if( button2DebouncePhase != false )
    {
-      if( HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_2_PIN) )
+      if( !HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_2_PIN) )
       {
          button2DebounceCnt++;
       }
@@ -262,9 +262,9 @@ void TIM1_UP_IRQHandler( void )
    {
       button2DebouncePhase = false;
       
-      if( button2DebounceCnt == DEBOUNCE_VAL )
+      if( button2DebounceCnt == DEBOUNCE_VAL ) // || button2DebounceCnt == 0 )
       {
-         // button callback
+         // button callback on high level
          cbButton2();
       }
    }
