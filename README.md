@@ -5,5 +5,5 @@ A small Project for a diy VW Bulli out of wood. The VW Bulli has been extended w
 Many thanks to Linda for this nice wood and paint work of the VW Bulli.
 
 ## Pictures
-![VW Bulli 1](./bus1.HEIC)
-![VW Bulli 2](./bus2.HEIC)
+![VW Bulli 1](./vwbus1.jpg)
+![VW Bulli 2](./vwbus2.jpg)
