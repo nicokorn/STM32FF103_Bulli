@@ -51,10 +51,10 @@
 // Exported defines ***********************************************************
 #define BUTTON_0_PIN       GPIO_PIN_0
 #define BUTTON_1_PIN       GPIO_PIN_1
-#define BUTTON_2_PIN       GPIO_PIN_3
+#define BUTTON_2_PIN       GPIO_PIN_4
 #define BUTTON_0_IRQ       EXTI0_IRQn
 #define BUTTON_1_IRQ       EXTI1_IRQn
-#define BUTTON_2_IRQ       EXTI3_IRQn
+#define BUTTON_2_IRQ       EXTI4_IRQn
 #define BUTTON_GPIO        GPIOB
 #define BUTTON_GPIO_CLK    __HAL_RCC_GPIOB_CLK_ENABLE(); 
 

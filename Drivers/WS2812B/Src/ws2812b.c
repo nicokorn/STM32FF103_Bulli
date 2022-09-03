@@ -242,7 +242,7 @@ static WS2812B_StatusTypeDef init_gpio( void )
 {
    __HAL_RCC_GPIOA_CLK_ENABLE();                            //enable clock on the bus
    GPIO_InitTypeDef GPIO_InitStruct;               
-   GPIO_InitStruct.Pin          = GPIO_PIN_0 | GPIO_PIN_1;  // if you want also to use pin 1, then write GPIO_PIN_0 | GPIO_PIN_1 => GPIO_PIN_1 would be the second led row
+   GPIO_InitStruct.Pin          = GPIO_PIN_All;  // if you want also to use pin 1, then write GPIO_PIN_0 | GPIO_PIN_1 => GPIO_PIN_1 would be the second led row
    GPIO_InitStruct.Mode         = GPIO_MODE_OUTPUT_PP;      // configure pins for pp output
    GPIO_InitStruct.Speed        = GPIO_SPEED_FREQ_HIGH;     // 50 MHz rate
    GPIO_InitStruct.Pull         = GPIO_NOPULL;              // disable pull

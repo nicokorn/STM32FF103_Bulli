@@ -72,6 +72,7 @@ typedef struct
 /* Private define ------------------------------------------------------------*/
 #define REFRESH_PERIOD_MS        ( 100u )
 #define EVENT_QUEUE_CAPACITY     ( 10u )
+#define MAX_WHITE                ( 0xAA )
 
 /* Private macro -------------------------------------------------------------*/
 
@@ -129,7 +130,7 @@ static uint16_t   msToTicks         ( uint16_t ms );
 static void       colorWheelPlus    ( uint8_t *red, uint8_t *green, uint8_t *blue );
 static void       setBlinkerLeft    ( uint8_t param_r, uint8_t param_g, uint8_t param_b );
 static void       setBlinkerRight   ( uint8_t param_r, uint8_t param_g, uint8_t param_b );
-static void       setLightLeft     ( uint8_t param_r, uint8_t param_g, uint8_t param_b );
+static void       setLightLeft      ( uint8_t param_r, uint8_t param_g, uint8_t param_b );
 static void       setLightRight     ( uint8_t param_r, uint8_t param_g, uint8_t param_b );
 static void       setLightInterior  ( uint8_t param_r, uint8_t param_g, uint8_t param_b );
 
@@ -279,11 +280,11 @@ static void refreshLeds( void )
       // ignition animation
       if( HAL_GPIO_ReadPin(BUTTON_GPIO, BUTTON_0_PIN) )
       {
-         ignitionFlicker = 0xff;
+         ignitionFlicker = MAX_WHITE;
       }
       else
       {
-         ignitionFlicker = rand()%0xff;
+         ignitionFlicker = rand()%MAX_WHITE;
       }
       setLightLeft( ignitionFlicker, ignitionFlicker, ignitionFlicker );
       setLightRight( ignitionFlicker, ignitionFlicker, ignitionFlicker );
@@ -337,6 +338,14 @@ static void refreshLeds( void )
    framecounter++;
 }
 
+// ----------------------------------------------------------------------------
+/// \brief     Set led colors on left blinker.
+///
+/// \param     [in] uint8_t param_r
+/// \param     [in] uint8_t param_g
+/// \param     [in] uint8_t param_b
+///
+/// \return    none
 static void setBlinkerLeft( uint8_t param_r, uint8_t param_g, uint8_t param_b )
 {
    for( uint16_t x=bulli_l_blink.col_start; x<=bulli_l_blink.col_end; x++  )
@@ -348,6 +357,14 @@ static void setBlinkerLeft( uint8_t param_r, uint8_t param_g, uint8_t param_b )
    }
 }
 
+// ----------------------------------------------------------------------------
+/// \brief     Set led colors on right blinker.
+///
+/// \param     [in] uint8_t param_r
+/// \param     [in] uint8_t param_g
+/// \param     [in] uint8_t param_b
+///
+/// \return    none
 static void setBlinkerRight( uint8_t param_r, uint8_t param_g, uint8_t param_b )
 {
    for( uint16_t x=bulli_r_blink.col_start; x<=bulli_r_blink.col_end; x++  )
@@ -359,6 +376,14 @@ static void setBlinkerRight( uint8_t param_r, uint8_t param_g, uint8_t param_b )
    }
 }
 
+// ----------------------------------------------------------------------------
+/// \brief     Set led colors on left light.
+///
+/// \param     [in] uint8_t param_r
+/// \param     [in] uint8_t param_g
+/// \param     [in] uint8_t param_b
+///
+/// \return    none
 static void setLightLeft( uint8_t param_r, uint8_t param_g, uint8_t param_b )
 {
    for( uint16_t x=bulli_l_light.col_start; x<=bulli_l_light.col_end; x++  )
@@ -370,6 +395,14 @@ static void setLightLeft( uint8_t param_r, uint8_t param_g, uint8_t param_b )
    }
 }
 
+// ----------------------------------------------------------------------------
+/// \brief     Set led colors on right light.
+///
+/// \param     [in] uint8_t param_r
+/// \param     [in] uint8_t param_g
+/// \param     [in] uint8_t param_b
+///
+/// \return    none
 static void setLightRight( uint8_t param_r, uint8_t param_g, uint8_t param_b )
 {
    for( uint16_t x=bulli_r_light.col_start; x<=bulli_r_light.col_end; x++  )
@@ -381,6 +414,14 @@ static void setLightRight( uint8_t param_r, uint8_t param_g, uint8_t param_b )
    }
 }
 
+// ----------------------------------------------------------------------------
+/// \brief     Set led colors of the interior.
+///
+/// \param     [in] uint8_t param_r
+/// \param     [in] uint8_t param_g
+/// \param     [in] uint8_t param_b
+///
+/// \return    none
 static void setLightInterior( uint8_t param_r, uint8_t param_g, uint8_t param_b )
 {
    for( uint16_t x=bulli_interior_light.col_start; x<=bulli_interior_light.col_end; x++  )

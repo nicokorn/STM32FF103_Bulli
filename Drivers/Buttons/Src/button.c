@@ -326,7 +326,7 @@ void EXTI1_IRQHandler( void )
 /// \param      none
 ///
 /// \return     none
-void EXTI3_IRQHandler( void )
+void EXTI4_IRQHandler( void )
 {
    // handle the irq
    if (__HAL_GPIO_EXTI_GET_IT(BUTTON_2_PIN) != 0x00u)

@@ -20,7 +20,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>3222578028</Checksum>
+        <Checksum>3808717352</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -57,14 +57,14 @@
         <ITMlogFile>$PROJ_DIR$\ITM.log</ITMlogFile>
     </SWOTraceHWSettings>
     <PlDriver>
-        <MemConfigValue>C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\CONFIG\debugger\ST\STM32F103C8.ddf</MemConfigValue>
         <FirstRun>0</FirstRun>
+        <MemConfigValue>C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\CONFIG\debugger\ST\STM32F103C8.ddf</MemConfigValue>
     </PlDriver>
     <JLinkDriver>
-        <LeaveTargetRunning>_ 0</LeaveTargetRunning>
-        <CStepIntDis>_ 0</CStepIntDis>
         <jlinkResetStyle>12</jlinkResetStyle>
         <jlinkResetStrategy>0</jlinkResetStrategy>
+        <LeaveTargetRunning>_ 0</LeaveTargetRunning>
+        <CStepIntDis>_ 0</CStepIntDis>
     </JLinkDriver>
     <ArmDriver>
         <EnableCache>0</EnableCache>
@@ -127,25 +127,15 @@
         <ShowTimeSum>1</ShowTimeSum>
         <SumSortOrder>0</SumSortOrder>
     </EventLog>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Count>0</Count>
-    </Breakpoints2>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
-    <Aliases>
-        <A0>_ "C:\Users\nico1\Documents\Projekte\WS2812B\ST\EWARM\startup_stm32f103xb.s" "D:\GitHub\STM32F1XX_WS2812B\EWARM\startup_stm32f103xb.s"</A0>
-        <A1>_ "C:\Users\nico1\Documents\Projekte\WS2812B\ST\Src\stm32f1xx_it.c" "D:\GitHub\STM32F1XX_WS2812B\Src\stm32f1xx_it.c"</A1>
-        <A2>_ "C:\Users\nico1\Documents\Projekte\WS2812B\WS2812B\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c" "C:\Users\nico1\Documents\Projekte\WS2812B\ST\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c"</A2>
-        <A3>_ "C:\Users\nico1\Documents\Projekte\WS2812B\WS2812B\Src\stm32f1xx_it.c" "C:\Users\nico1\Documents\Projekte\WS2812B\ST\Src\stm32f1xx_it.c"</A3>
-        <Count>4</Count>
-        <SuppressDialog>1</SuppressDialog>
-    </Aliases>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>3</Mode>
@@ -164,8 +154,18 @@
         <Probe0>I0</Probe0>
         <ProbeSetup0>2 1 1 2 0 0</ProbeSetup0>
     </PowerProbe>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Count>0</Count>
+    </Breakpoints2>
+    <Aliases>
+        <A0>_ "C:\Users\nico1\Documents\Projekte\WS2812B\ST\EWARM\startup_stm32f103xb.s" "D:\GitHub\STM32F1XX_WS2812B\EWARM\startup_stm32f103xb.s"</A0>
+        <A1>_ "C:\Users\nico1\Documents\Projekte\WS2812B\ST\Src\stm32f1xx_it.c" "D:\GitHub\STM32F1XX_WS2812B\Src\stm32f1xx_it.c"</A1>
+        <A2>_ "C:\Users\nico1\Documents\Projekte\WS2812B\WS2812B\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c" "C:\Users\nico1\Documents\Projekte\WS2812B\ST\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c"</A2>
+        <A3>_ "C:\Users\nico1\Documents\Projekte\WS2812B\WS2812B\Src\stm32f1xx_it.c" "C:\Users\nico1\Documents\Projekte\WS2812B\ST\Src\stm32f1xx_it.c"</A3>
+        <Count>4</Count>
+        <SuppressDialog>1</SuppressDialog>
+    </Aliases>
 </settings>
